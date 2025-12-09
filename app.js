@@ -66,19 +66,24 @@ createBtn.onclick = function () {
   if (inputElement.value.length === 0) {
     return;
   }
+  const newNote = {
+    title: inputElement.value,
+    completed: false,
+  }
   listElement.insertAdjacentHTML(
     'beforeend',
-    getNoteTemplate(inputElement.value)
+    getNoteTemplate(newNote)
   );
   inputElement.value = '';
 };
 
 function getNoteTemplate(note) {
+  console.log(note.completed);
   return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>${note.title}</span>
+            <span class="${note.completed ? 'text-decoration-line-through' : ''}">${note.title}</span>
             <span>
-            <span class="btn btn-small btn-success">&check;</span>
+            <span class="btn btn-small btn-${note.completed ? 'warning' : 'success'}">&check;</span>
             <span class="btn btn-small btn-danger">&times;</span>
             </span>
         </li>
