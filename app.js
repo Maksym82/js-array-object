@@ -51,13 +51,14 @@ const notes = [
 ];
 
 function render() {
-  // for(i =0; i < notes.length; i++) {
-  //   listElement.insertAdjacentHTML('beforeend', getNoteTemplate(notes[i]));
-  // }
-
-  for (let note of notes) {
-    listElement.insertAdjacentHTML('beforeend', getNoteTemplate(note));
+  listElement.innerHTML = '';
+  for (i = 0; i < notes.length; i++) {
+    listElement.insertAdjacentHTML('beforeend', getNoteTemplate(notes[i]), i);
   }
+
+  // for (let note of notes) {
+  //   listElement.insertAdjacentHTML('beforeend', getNoteTemplate(note));
+  // }
 }
 
 render();
@@ -69,21 +70,25 @@ createBtn.onclick = function () {
   const newNote = {
     title: inputElement.value,
     completed: false,
-  }
-  listElement.insertAdjacentHTML(
-    'beforeend',
-    getNoteTemplate(newNote)
-  );
+  };
+  notes.push(newNote);
+  render();
   inputElement.value = '';
 };
 
-function getNoteTemplate(note) {
-  console.log(note.completed);
+listElement.onclick = function (event) {
+  console.log(event.target);
+}
+
+function getNoteTemplate(note, index) {
   return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span class="${note.completed ? 'text-decoration-line-through' : ''}">${note.title}</span>
+            <span class="${
+              note.completed ? 'text-decoration-line-through' : ''
+            }">${note.title}</span>
             <span>
-            <span class="btn btn-small btn-${note.completed ? 'warning' : 'success'}">&check;</span>
+            <span class="btn btn-small btn-${note.completed ? 'warning' : 'success'
+            }" data-index="${index}" data-type="toggle">&check;</span>
             <span class="btn btn-small btn-danger">&times;</span>
             </span>
         </li>
