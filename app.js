@@ -52,6 +52,9 @@ const notes = [
 
 function render() {
   listElement.innerHTML = '';
+  if (notes.length === 0) {
+    listElement.innerHTML = '<p>Нет элементов</p>'
+  }
   for (i = 0; i < notes.length; i++) {
     listElement.insertAdjacentHTML('beforeend', getNoteTemplate(notes[i], i));
   }
